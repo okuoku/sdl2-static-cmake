@@ -28,6 +28,7 @@ set(sdl2_win32_common_srcs
     joystick/windows/SDL_xinputjoystick.c
     loadso/windows/SDL_sysloadso.c
     render/direct3d11/SDL_render_d3d11.c
+    render/direct3d11/SDL_shaders_d3d11.c
     timer/windows/SDL_systimer.c
     )
 

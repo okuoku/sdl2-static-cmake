@@ -31,7 +31,29 @@ add_definitions(
 
 # FIXME: Check Android and Emscripten first.
 if(${CMAKE_SYSTEM_NAME} STREQUAL "WindowsStore")
-    message(FATAL_ERROR "huh?")
+    # WinRT(UWP)
+    rebase_sources(sdl2_c_srcs
+        ${sdl2_egl_srcs}
+        ${sdl2_common_srcs}
+        ${sdl2_win32_common_srcs}
+        ${sdl2_stdcpp_srcs}
+        ${sdl2_libm_srcs})
+    rebase_sources(sdl2_cpp_srcs 
+        ${sdl2_winrt_srcs})
+    rebase_sources(sdl2_main_srcs
+        main/winrt/SDL_winrt_main_NonXAML.cpp)
+    set_source_files_properties(${sdl2_c_srcs} ${sdl2_cpp_srcs} ${sdl2_main_srcs}
+        PROPERTIES
+        COMPILE_DEFINITIONS
+        "_CRT_SECURE_NO_WARNINGS;SDL_BUILDING_WINRT=1")
+    set_source_files_properties(${sdl2_cpp_srcs} ${sdl2_main_srcs}
+        COMPILE_FLAGS "/ZW")
+    set(sdl2_srcs)
+    list(APPEND sdl2_srcs ${sdl2_c_srcs} ${sdl2_cpp_srcs})
+    # WAR: Almost all apps will need dxguid still
+    add_definitions(
+        -DIID_IDXGIFactory2=SDL_IID_IDXGIFactory2
+        )
 elseif(WIN32)
     rebase_sources(sdl2_srcs
         ${sdl2_egl_srcs}
@@ -51,5 +73,5 @@ endif()
 
 include_directories(${SDL2_ROOT}/include)
 
-add_library(sdl2_static STATIC ${sdl2_srcs})
-add_library(sdl2_main_static STATIC ${sdl2_main_srcs})
+add_library(sdl2_static OBJECT ${sdl2_srcs})
+add_library(sdl2_main_static OBJECT ${sdl2_main_srcs})
