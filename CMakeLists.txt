@@ -29,11 +29,14 @@ add_definitions(
     -DSDL_dynapi_h_
     -DSDL_DYNAMIC_API=0)
 
+# FIXME: SDL_egl_grpcore0.c require this..
+include_directories(${SDL2_ROOT}/src/video)
+
 # FIXME: Check Android and Emscripten first.
 if(${CMAKE_SYSTEM_NAME} STREQUAL "WindowsStore")
     # WinRT(UWP)
     rebase_sources(sdl2_c_srcs
-        ${sdl2_egl_srcs}
+        #${sdl2_egl_srcs}
         ${sdl2_common_srcs}
         ${sdl2_win32_common_srcs}
         ${sdl2_stdcpp_srcs}
@@ -50,19 +53,21 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "WindowsStore")
         COMPILE_FLAGS "/ZW")
     set(sdl2_srcs)
     list(APPEND sdl2_srcs ${sdl2_c_srcs} ${sdl2_cpp_srcs})
+    list(APPEND sdl2_srcs ${CMAKE_CURRENT_LIST_DIR}/SDL_egl_grpcore0.c)
     # WAR: Almost all apps will need dxguid still
     add_definitions(
         -DIID_IDXGIFactory2=SDL_IID_IDXGIFactory2
         )
 elseif(WIN32)
     rebase_sources(sdl2_srcs
-        ${sdl2_egl_srcs}
+        #${sdl2_egl_srcs}
         ${sdl2_common_srcs}
         ${sdl2_win32_common_srcs}
         ${sdl2_libm_srcs}
         ${sdl2_win32_desktop_srcs})
     rebase_sources(sdl2_main_srcs
         main/windows/SDL_windows_main.c)
+    list(APPEND sdl2_srcs ${CMAKE_CURRENT_LIST_DIR}/SDL_egl_grpcore0.c)
     set_source_files_properties(${sdl2_srcs} ${sdl2_main_srcs}
         PROPERTIES
         COMPILE_DEFINITIONS
