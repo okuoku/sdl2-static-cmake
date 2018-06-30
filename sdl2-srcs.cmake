@@ -209,6 +209,9 @@ set(sdl2_common_srcs
     joystick/dummy/SDL_sysjoystick.c
     joystick/SDL_gamecontroller.c
     joystick/SDL_joystick.c
+    joystick/steam/SDL_steamcontroller.c
+    joystick/steam/SDL_steamcontroller.h
+
 
     power/SDL_power.c
 
@@ -271,6 +274,43 @@ set(sdl2_common_srcs
     video/yuv2rgb/yuv_rgb.c
 
     video/SDL_vulkan_utils.c
+    )
+
+set(sdl2_pthread_srcs
+    thread/pthread/SDL_syscond.c
+    thread/pthread/SDL_sysmutex.c
+    thread/pthread/SDL_sysmutex_c.h
+    thread/pthread/SDL_syssem.c
+    thread/pthread/SDL_systhread.c
+    thread/pthread/SDL_systhread_c.h
+    thread/pthread/SDL_systls.c
+    )
+set(sdl2_unix_srcs
+    core/unix/SDL_poll.c
+    core/unix/SDL_poll.h
+    filesystem/unix/SDL_sysfilesystem.c
+    timer/unix/SDL_systimer.c
+    loadso/dlopen/SDL_sysloadso.c
+    )
+
+set(sdl2_android_srcs
+    audio/android/SDL_androidaudio.c
+    core/android/SDL_android.c
+    filesystem/android/SDL_sysfilesystem.c
+    haptic/android/SDL_syshaptic.c
+    joystick/android/SDL_sysjoystick.c
+    main/android/SDL_android_main.c
+    power/android/SDL_syspower.c
+    video/android/SDL_androidclipboard.c
+    video/android/SDL_androidevents.c
+    video/android/SDL_androidgl.c
+    video/android/SDL_androidkeyboard.c
+    video/android/SDL_androidmessagebox.c
+    video/android/SDL_androidmouse.c
+    video/android/SDL_androidtouch.c
+    video/android/SDL_androidvideo.c
+    video/android/SDL_androidvulkan.c
+    video/android/SDL_androidwindow.c
     )
 
 set(sdl2_egl_srcs

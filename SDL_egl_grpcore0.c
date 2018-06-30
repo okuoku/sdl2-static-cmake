@@ -256,9 +256,11 @@ SDL_EGL_LoadLibrary(_THIS, const char *egl_path, NativeDisplayType native_displa
         }
     }
 
+#if !defined(__ANDROID__)
     if (egl_version_major == 1 && egl_version_minor == 5) {
         LOAD_FUNC(eglGetPlatformDisplay);
     }
+#endif
 
     _this->egl_data->egl_display = EGL_NO_DISPLAY;
 #if !defined(__WINRT__)

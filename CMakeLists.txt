@@ -72,6 +72,18 @@ elseif(WIN32)
         PROPERTIES
         COMPILE_DEFINITIONS
         "_CRT_SECURE_NO_WARNINGS;_WINDOWS;HAVE_LIBC")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL Android)
+    # Android
+    rebase_sources(sdl2_srcs
+        #${sdl2_egl_srcs}
+        ${sdl2_unix_srcs}
+        ${sdl2_pthread_srcs}
+        ${sdl2_android_srcs}
+        ${sdl2_common_srcs}
+        ${sdl2_libm_srcs})
+    rebase_sources(sdl2_main_srcs
+        main/android/SDL_android_main.c)
+    list(APPEND sdl2_srcs ${CMAKE_CURRENT_LIST_DIR}/SDL_egl_grpcore0.c)
 else()
     message(FATAL_ERROR "Unsupported platform.")
 endif()
